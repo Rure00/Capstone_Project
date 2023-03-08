@@ -6,7 +6,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.capsone.smart_white_cane"
+        applicationId "com.capstone.smart_white_cane"
         minSdk 29
         targetSdk 32
         versionCode 1

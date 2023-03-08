@@ -1,4 +1,4 @@
-package com.capsone.smart_white_cane;
+package com.capstone.smart_white_cane;
 
 import org.junit.Test;
 

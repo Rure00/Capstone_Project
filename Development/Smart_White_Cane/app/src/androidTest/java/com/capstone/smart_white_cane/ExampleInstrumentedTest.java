@@ -1,4 +1,4 @@
-package com.capsone.smart_white_cane;
+package com.capstone.smart_white_cane;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.capsone.smart_white_cane", appContext.getPackageName());
+        assertEquals("com.capstone.smart_white_cane", appContext.getPackageName());
     }
 }

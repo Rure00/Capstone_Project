@@ -1,8 +1,10 @@
-package com.capsone.smart_white_cane;
+package com.capstone.smart_white_cane.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.capstone.smart_white_cane.R;
 
 public class MainActivity extends AppCompatActivity {
 

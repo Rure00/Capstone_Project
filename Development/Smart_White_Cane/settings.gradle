@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Smart_White_Cane"
+rootProject.name = "Smart_White_cane"
 include ':app'
