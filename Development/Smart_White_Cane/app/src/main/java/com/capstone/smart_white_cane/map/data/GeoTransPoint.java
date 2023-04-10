@@ -2,8 +2,8 @@ package com.capstone.smart_white_cane.map.data;
 
 public class GeoTransPoint {
 
-    public double x;
-    public double y;
+    public double x;        //longitude
+    public double y;        //latitude
     public double z;
 
     public GeoTransPoint() {

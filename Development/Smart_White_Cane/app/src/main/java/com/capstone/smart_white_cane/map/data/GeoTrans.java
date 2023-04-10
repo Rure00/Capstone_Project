@@ -191,7 +191,6 @@ public class GeoTrans {
         out_pt.y = m_arScaleFactor[dsttype] * (ml - dst_m[dsttype] + n * tq * (als * (0.5 + als / 24.0 * (5.0 - t + 9.0 * c + 4.0 * c * c + als / 30.0 * (61.0 - 58.0 * t + t * t + 600.0 * c - 330.0 * m_Esp[dsttype]))))) + m_arFalseNorthing[dsttype];
     }
 
-
     public static void tm2geo(int srctype, GeoTransPoint in_pt, GeoTransPoint out_pt) {
         GeoTransPoint tmpPt = new GeoTransPoint(in_pt.getX(), in_pt.getY());
         int max_iter = 6;
@@ -271,26 +270,11 @@ public class GeoTrans {
         return 6376.5 * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a));
     }
 
-    public static double getDistancebyKatec(GeoTransPoint pt1, GeoTransPoint pt2) {
-        pt1 = convert(KATEC, GEO, pt1);
-        pt2 = convert(KATEC, GEO, pt2);
-
-        return getDistancebyGeo(pt1, pt2);
+    public static GeoTransPoint CoordinateToGeoPoint(Coordinate coordinate) {
+        return new GeoTransPoint(coordinate.getLongitude(), coordinate.getLatitude());
     }
-
-    public static double getDistancebyTm(GeoTransPoint pt1, GeoTransPoint pt2) {
-        pt1 = convert(TM, GEO, pt1);
-        pt2 = convert(TM, GEO, pt2);
-
-        return getDistancebyGeo(pt1, pt2);
-    }
-
-    private static long getTimebySec(double distance) {
-        return Math.round(3600 * distance / 4);
-    }
-
-    public static long getTimebyMin(double distance) {
-        return (long) (Math.ceil(getTimebySec(distance) / 60));
+    public static Coordinate GeoPointTOCoordinate(GeoTransPoint geoTransPoint) {
+        return new Coordinate(geoTransPoint.x, geoTransPoint.y);
     }
 
 	/*

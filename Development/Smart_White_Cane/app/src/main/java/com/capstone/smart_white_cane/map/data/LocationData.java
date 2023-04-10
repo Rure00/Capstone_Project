@@ -1,37 +1,23 @@
 package com.capstone.smart_white_cane.map.data;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
 public class LocationData {
+    //TODO: Json 형태로 받은 데이터(String)를 자동으로 변환하도록 바꾸기
+    //     그리고 roadAddress 좀더 세분화하기.
+    //      ex) 서울 중구 세종대로 99 -> String si: 서울, String gu: 중구, String ro: 세종대로, int bNum: 99
+    private String name;
+    private RoadAddress roadAddress;
+    private JibunAddress jibunAddress;
+    private Coordinate coordinate;
 
-    private final String name;
-    private final String roadAddress;
-    private final String jibunAddress;
-    private final String category;
-    private final String description;
-    private final Coordinate coordinate;
-
-    public LocationData(String name, String roadAddress, String jibunAddress, String category, String description, Coordinate coordinate) {
+    public LocationData(String name, RoadAddress roadAddress, JibunAddress jibunAddress, Coordinate coordinate) {
         this.name = name;
         this.roadAddress = roadAddress;
         this.jibunAddress = jibunAddress;
-        this.category = category;
-        this.description = description;
         this.coordinate = coordinate;
     }
-
-    public String getName() {
-        return name;
-    }
-    public String getRoadAddress() {
-        return roadAddress;
-    }
-    public String getJibunAddress() {
-        return jibunAddress;
-    }
-    public String getCategory() {
-        return category;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public Coordinate getCoordinate() { return coordinate; }
 }
