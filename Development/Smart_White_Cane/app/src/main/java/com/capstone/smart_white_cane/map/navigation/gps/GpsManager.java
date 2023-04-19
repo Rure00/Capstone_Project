@@ -54,7 +54,7 @@ public class GpsManager implements LocationListener {
                 double lat = location.getLatitude();
                 double lon = location.getLongitude();
 
-                Coordinate curCoordinate = new Coordinate(lat, lon);
+                Coordinate curCoordinate = new Coordinate(lon, lat);
                 ReverseGeoCoding rGeoCoding = new ReverseGeoCoding(curCoordinate);
                 try {
                     rGeoCoding.execute();

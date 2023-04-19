@@ -1,5 +1,7 @@
 package com.capstone.smart_white_cane.map.data;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import lombok.AllArgsConstructor;
@@ -13,8 +15,14 @@ public class Coordinate {
     private final double longitude;
 
     public Coordinate(Double longitude, Double latitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+        if(longitude < 100 || latitude > 100) {
+            Log.e("Error", "Coordinate is set improperly");
+            this.longitude = latitude;
+            this.latitude = longitude;
+        } else {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
     }
 
     public String toString() { return longitude + "," + latitude; }
