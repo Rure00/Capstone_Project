@@ -17,14 +17,22 @@ import androidx.core.content.ContextCompat;
 import com.MySystem.MyApplication;
 import com.capstone.smart_white_cane.map.data.Coordinate;
 import com.capstone.smart_white_cane.map.data.CurrentLocationData;
+import com.capstone.smart_white_cane.map.data.JibunAddress;
+import com.capstone.smart_white_cane.map.data.RoadAddress;
 import com.capstone.smart_white_cane.map.navigation.function.ReverseGeoCoding;
 import com.capstone.smart_white_cane.map.navigation.tMap.data.NavigateData;
+import com.skt.tmap.TMapView;
+
+import java.util.concurrent.ExecutionException;
+
+import kotlin.Pair;
 
 public class GpsManager implements LocationListener {
 
     private LocationManager locationManager = null;
     private boolean isOnNavigating = false;
     private NavigateData navigateData;
+
     String[] permissions = {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -34,7 +42,6 @@ public class GpsManager implements LocationListener {
     public GpsManager() {
         locationManager = (LocationManager) MyApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
         Context context = MyApplication.getContext();
-        Log.d("MyTag", context.toString());
         Activity curActivity = (Activity) MyApplication.getContext();
 
         if ( ContextCompat.checkSelfPermission( MyApplication.getContext(), permissions[0] ) != PackageManager.PERMISSION_GRANTED ) {
@@ -55,14 +62,12 @@ public class GpsManager implements LocationListener {
                 double lon = location.getLongitude();
 
                 Coordinate curCoordinate = new Coordinate(lon, lat);
-                ReverseGeoCoding rGeoCoding = new ReverseGeoCoding(curCoordinate);
+                //ReverseGeoCoding rGeoCoding = new ReverseGeoCoding(curCoordinate);
                 try {
-                    rGeoCoding.execute();
+                    //rGeoCoding.execute();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -90,7 +95,23 @@ public class GpsManager implements LocationListener {
 
         //현위치 데이터 업데이트
         ReverseGeoCoding rgc = new ReverseGeoCoding(curCoordinate);
-        rgc.execute();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    Pair<String, String> results = rgc.execute().get();
+
+                    RoadAddress roadAddress = RoadAddress.toRoad(results.component1());
+                    JibunAddress jibunAddress = JibunAddress.toJibun(results.component2());
+
+                    CurrentLocationData.getInstance().updateData(roadAddress, jibunAddress, curCoordinate);
+                } catch (Exception e) {
+                    Log.e("GpsManager", e.toString());
+                }
+
+            }
+        }).start();
 
         //Navigate 중이면 관련 작업 처리하기
         if(isOnNavigating) {
@@ -118,9 +139,9 @@ public class GpsManager implements LocationListener {
 
         try{
             Log.d("MyTag", CurrentLocationData.getInstance().getRoadAddress().toString());
-
         } catch (Exception e) {
-            Log.d("MyTag", "CurLocationData is not ready");
+            //e.printStackTrace();
+            Log.d("MyTag", "CurLocationData is empty");
         }
 
     }

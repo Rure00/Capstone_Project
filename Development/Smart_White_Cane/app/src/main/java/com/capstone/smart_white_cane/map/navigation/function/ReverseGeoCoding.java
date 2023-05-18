@@ -24,12 +24,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class ReverseGeoCoding extends AsyncTask<Void, Void, Void> {
+import kotlin.Pair;
+
+public class ReverseGeoCoding extends AsyncTask<Void, Void, Pair<String, String>> {
 
     private String clientId = "p49yc3zz58";
     private String clientSecret = "69QaWsIH1jADH5wDVeagWbPgfJML9H12tDpxBaOk";
 
     private Coordinate coordinate;
+
+    private String apiURL;
+
+    Pair<String, String> myResult;
 
     public ReverseGeoCoding(Coordinate coordinate) {
         this.coordinate = coordinate;
@@ -43,24 +49,20 @@ public class ReverseGeoCoding extends AsyncTask<Void, Void, Void> {
          1. doInBackground 메소드가 실행되기 전에 실행되는 메소드입니다
          2. 비동기 처리전에 무엇인가 처리를 하고 싶다면 사용하면 됩니다
          */
-
-
+        apiURL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordToaddr"
+                + "&coords=" + coordinate.toString()
+                + "&orders=" + "addr,roadaddr"
+                + "&output=" + "json";	// JSON
     }
 
     @Override
-    protected Void doInBackground(Void ... params) {
+    protected Pair<String, String> doInBackground(Void ... params) {
         /**
          1. 비동기 작업에서 최종 처리하고 싶은 내용을 작성합니다
          2. 실시간 진행 상황을 확인하고 싶을 경우 onProgressUpdate() 메소드를 호출해서 확인할 수 있습니다
          3. 모든 작업이 처리되면 onPostExecute() 메소드가 호출됩니다
          */
         try {
-
-            String apiURL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordToaddr"
-                    + "&coords=" + coordinate.toString()
-                    + "&orders=" + "addr,roadaddr"
-                    + "&output=" + "json";	// JSON
-
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -115,14 +117,7 @@ public class ReverseGeoCoding extends AsyncTask<Void, Void, Void> {
 
             //Log.d("MyTag", "Step 3");
 
-            RoadAddress roadAddress = RoadAddress.toRoad(roadAddressStr);
-            JibunAddress jibunAddress = JibunAddress.toJibun(jibunAddressStr);
-
-            try{
-                CurrentLocationData.getInstance().updateData(roadAddress, jibunAddress, coordinate);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            myResult = new Pair<>(roadAddressStr, jibunAddressStr);
 
 
         } catch (Exception e) {
@@ -130,20 +125,22 @@ public class ReverseGeoCoding extends AsyncTask<Void, Void, Void> {
 
         }
 
-        //Log.d("MyTag", "After Task: " + CurrentLocationData.getInstance().getCoordinate().toString());
+        //Log.d("MyTag", "After Task: " + CurrentLocationData.getInstance().getRoadAddress().toString());
 
 
-        return null;
+        return myResult;
     }
 
 
     @Override
-    protected void onPostExecute(Void result) {
+    protected void onPostExecute(Pair<String, String> result) {
         super.onPostExecute(result);
         /**
          1. doInBackground 메소드 후에 실행되는 메소드입니다
          2. 최종 작업이 완료된 경우 수행이 됩니다
          */
+
+
 
     }
 }

@@ -67,7 +67,7 @@ public class BusMode implements basicMode {
             double x = Double.parseDouble(coordinate[0]);
             double y = Double.parseDouble(coordinate[1]);
 
-            results.set(i, new Coordinate(x, y));
+            results.add(new Coordinate(x, y));
         }
 
         return results;

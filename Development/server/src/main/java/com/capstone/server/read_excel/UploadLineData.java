@@ -1,9 +1,7 @@
 package com.capstone.server.read_excel;
 
 import com.capstone.server.controller.ServerController;
-import com.capstone.server.data.dto.RoadwayDTO;
 import com.capstone.server.data.entity.Roadway;
-import com.capstone.server.service.RoadwayService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -19,6 +17,7 @@ public class UploadLineData {
         ro = new ExcelReadOption();
         try {
             ro.setFilePath("C:/Users/USER/Desktop/SungSengmo/Capstone_Project/Plan/Software/Seoul_Line.xlsx");
+            //ro.setFilePath("C:/Users/USER/Desktop/SungSengmo/Capstone_Project/Plan/Software/k.xlsx");
             ro.setOutputColumns("A", "B", "C");
             ro.setStartRow(2);
         } catch(Exception e) {

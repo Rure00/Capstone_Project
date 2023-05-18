@@ -8,6 +8,7 @@ import com.capstone.smart_white_cane.map.navigation.gps.GpsManager;
 import com.capstone.smart_white_cane.map.navigation.tMap.FindRoute;
 import com.capstone.smart_white_cane.map.navigation.tMap.data.NavigateData;
 import com.capstone.smart_white_cane.map.navigation.tMap.data.RouteData;
+import com.skt.tmap.TMapView;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class NavigationController implements NavigationControllerInterface {
 
     GpsManager gpsManager = null;
 
-    public NavigationController() {
+    public NavigationController(TMapView tMapView) {
         gpsManager = new GpsManager();
     }
 

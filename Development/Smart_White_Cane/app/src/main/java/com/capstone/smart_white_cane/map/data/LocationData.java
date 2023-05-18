@@ -1,6 +1,8 @@
 package com.capstone.smart_white_cane.map.data;
 
 
+import com.naver.maps.geometry.Coord;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -20,4 +22,7 @@ public class LocationData {
         this.jibunAddress = jibunAddress;
         this.coordinate = coordinate;
     }
+
+    public Coordinate getCoordinate() { return coordinate; }
+    public String getName() { return name; }
 }

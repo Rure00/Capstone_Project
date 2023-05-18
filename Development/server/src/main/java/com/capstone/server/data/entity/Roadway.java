@@ -25,7 +25,7 @@ public class Roadway extends BaseEntity {
     private Boolean existence;
 
     @Column(nullable = false)
-    private Integer score;
+    private float score;
 
     @Column(nullable = false)
     private Integer updateNum;

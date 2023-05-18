@@ -1,5 +1,7 @@
 package com.capstone.smart_white_cane.map.navigation.tMap.data;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.capstone.smart_white_cane.map.data.Coordinate;
@@ -24,6 +26,8 @@ public class WalkMode implements basicMode {
 
     public WalkMode(JSONObject json) {
         try{
+            Log.d("WalkMode", "walkMode is created");
+
             sectionTime = json.get("sectionTime").toString();
             distance = json.get("distance").toString();
 
@@ -38,7 +42,7 @@ public class WalkMode implements basicMode {
             endName = end.get("name").toString();
 
             JSONArray stepJson = json.getJSONArray("steps");
-            stepList = new ArrayList<>(stepJson.length());
+            stepList = new ArrayList<>();
 
             for(int i =0; i< stepJson.length(); i++) {
                 JSONObject step = stepJson.getJSONObject(i);
@@ -46,17 +50,28 @@ public class WalkMode implements basicMode {
                 String distance = step.get("distance").toString();
                 String description = step.get("description").toString();
 
-                String lineStringStr = step.get("lineString").toString();
+                String lineStringStr = step.get("linestring").toString();
                 ArrayList<Coordinate> lineString = getCoordinates(lineStringStr);
 
                 Step newStep = new Step(streetName, distance, description, lineString);
 
-                stepList.set(i, newStep);
+                Log.d("WalkMode", "StreetName: " + streetName);
+
+                stepList.add(newStep);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public WalkMode() {
+        sectionTime = null;
+        distance = null;
+        startCoordinate = null;
+        endCoordinate = null;
+        startName = null;
+        endName = null;
+        stepList = null;
     }
 
     @Override
