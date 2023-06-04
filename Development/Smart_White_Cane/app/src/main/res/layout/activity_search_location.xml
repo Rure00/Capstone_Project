@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SearchLocationActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="검색 결과"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:background="#ff7a00"
+            android:layout_width="match_parent"
+            android:layout_height="53dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/firstText"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="첫번째 검색 결과"
+            android:textColor="@color/black"
+            />
+        <Button
+            android:id="@+id/firstBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ff7a00"
+            android:layout_marginStart="10dp"
+            android:text="선택"
+            android:textSize="20sp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/secondText"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="두번째 검색 결과"
+            android:textColor="@color/black"
+            />
+        <Button
+            android:id="@+id/secondBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ff7a00"
+            android:layout_marginStart="10dp"
+            android:text="선택"
+            android:textSize="20sp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/thirdText"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="세번째 검색 결과"
+            android:textColor="@color/black"
+            />
+        <Button
+            android:id="@+id/thirdBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ff7a00"
+            android:layout_marginStart="10dp"
+            android:text="선택"
+            android:textSize="20sp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/cancelBtn"
+            android:text="취소"
+            android:textSize="15sp"
+            android:textColor="#ff7a00"
+            android:gravity="center"
+            android:background="#00000000"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"/>
+    </LinearLayout>
+
+</LinearLayout>
+
+
+

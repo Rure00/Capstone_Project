@@ -1,22 +1,22 @@
 package com.capstone.smart_white_cane.map.data;
 
 
-import com.naver.maps.geometry.Coord;
-
-import lombok.AllArgsConstructor;
+import java.io.Serializable;
 import lombok.Getter;
 
 @Getter
-public class LocationData {
-    //TODO: Json 형태로 받은 데이터(String)를 자동으로 변환하도록 바꾸기
-    //     그리고 roadAddress 좀더 세분화하기.
-    //      ex) 서울 중구 세종대로 99 -> String si: 서울, String gu: 중구, String ro: 세종대로, int bNum: 99
+public class LocationData implements Serializable {
     private String name;
     private RoadAddress roadAddress;
     private JibunAddress jibunAddress;
+
+
     private Coordinate coordinate;
 
     public LocationData(String name, RoadAddress roadAddress, JibunAddress jibunAddress, Coordinate coordinate) {
+        if(name.contains("<b>") || name.contains("</b>")) {
+            name = name.replaceAll("<b>|</b>", "");
+        }
         this.name = name;
         this.roadAddress = roadAddress;
         this.jibunAddress = jibunAddress;

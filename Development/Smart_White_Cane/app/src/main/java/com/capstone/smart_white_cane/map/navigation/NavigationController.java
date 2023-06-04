@@ -1,6 +1,8 @@
 package com.capstone.smart_white_cane.map.navigation;
 
 
+import android.widget.TextView;
+
 import com.capstone.smart_white_cane.map.data.Coordinate;
 import com.capstone.smart_white_cane.map.data.LocationData;
 import com.capstone.smart_white_cane.map.navigation.function.SearchLocation;
@@ -16,10 +18,10 @@ import okhttp3.Route;
 
 public class NavigationController implements NavigationControllerInterface {
 
-    GpsManager gpsManager = null;
+    private GpsManager gpsManager = null;
 
-    public NavigationController(TMapView tMapView) {
-        gpsManager = new GpsManager();
+    public NavigationController(TextView curLocationText) {
+        gpsManager = new GpsManager(curLocationText);
     }
 
     @Override

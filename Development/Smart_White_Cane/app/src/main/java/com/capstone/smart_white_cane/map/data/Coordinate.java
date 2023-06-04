@@ -4,12 +4,14 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-public class Coordinate {
+public class Coordinate implements Serializable {
 
     private final double latitude;
     private final double longitude;

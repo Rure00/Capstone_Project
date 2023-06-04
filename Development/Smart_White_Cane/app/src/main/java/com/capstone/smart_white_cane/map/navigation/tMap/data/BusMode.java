@@ -20,6 +20,7 @@ public class BusMode implements basicMode {
 
     private ArrayList<Coordinate> lineString;
     private  int stopNum;
+    private String description;
 
     public BusMode(JSONObject json) {
         try{
@@ -42,18 +43,19 @@ public class BusMode implements basicMode {
             String lineStringStr = passShape.get("linestring").toString();
             lineString = getLineStrings(lineStringStr);
 
+            description = startName + "에서 승차하여 " + stopNum + "개 정거장 이후 " + endName + "에서 하차";
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public String getDescription(int index) { return endName + "역에서 하차"; }
-    @Override
     public Coordinate getPoint(int index) {
         int lastIndex = lineString.size() - 1;
         return lineString.get(lastIndex);
     }
+    public String getDescribes() { return description; }
 
     //------------------------------------------------------------------------------------------------------------------------//
     @NonNull

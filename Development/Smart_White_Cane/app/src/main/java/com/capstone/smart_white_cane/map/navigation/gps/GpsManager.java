@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,8 @@ import com.capstone.smart_white_cane.map.navigation.function.ReverseGeoCoding;
 import com.capstone.smart_white_cane.map.navigation.tMap.data.NavigateData;
 import com.skt.tmap.TMapView;
 
+import org.w3c.dom.Text;
+
 import java.util.concurrent.ExecutionException;
 
 import kotlin.Pair;
@@ -32,6 +35,7 @@ public class GpsManager implements LocationListener {
     private LocationManager locationManager = null;
     private boolean isOnNavigating = false;
     private NavigateData navigateData;
+    private TextView curLocationText;
 
     String[] permissions = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -39,10 +43,12 @@ public class GpsManager implements LocationListener {
             Manifest.permission.INTERNET
     };
 
-    public GpsManager() {
+    public GpsManager(TextView curLocationText) {
         locationManager = (LocationManager) MyApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
         Context context = MyApplication.getContext();
         Activity curActivity = (Activity) MyApplication.getContext();
+
+        this.curLocationText = curLocationText;
 
         if ( ContextCompat.checkSelfPermission( MyApplication.getContext(), permissions[0] ) != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions( curActivity, permissions, 0 );
@@ -62,9 +68,9 @@ public class GpsManager implements LocationListener {
                 double lon = location.getLongitude();
 
                 Coordinate curCoordinate = new Coordinate(lon, lat);
-                //ReverseGeoCoding rGeoCoding = new ReverseGeoCoding(curCoordinate);
+                ReverseGeoCoding rGeoCoding = new ReverseGeoCoding(curCoordinate);
                 try {
-                    //rGeoCoding.execute();
+                    rGeoCoding.execute();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -91,27 +97,9 @@ public class GpsManager implements LocationListener {
 
         Coordinate curCoordinate = new Coordinate(lon, lat);
 
-        //Toast.makeText(MyApplication.getAppContext(), "이동: " + lat+", " + lon, Toast.LENGTH_SHORT).show();
-
         //현위치 데이터 업데이트
         ReverseGeoCoding rgc = new ReverseGeoCoding(curCoordinate);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    Pair<String, String> results = rgc.execute().get();
-
-                    RoadAddress roadAddress = RoadAddress.toRoad(results.component1());
-                    JibunAddress jibunAddress = JibunAddress.toJibun(results.component2());
-
-                    CurrentLocationData.getInstance().updateData(roadAddress, jibunAddress, curCoordinate);
-                } catch (Exception e) {
-                    Log.e("GpsManager", e.toString());
-                }
-
-            }
-        }).start();
+        rgc.execute();
 
         //Navigate 중이면 관련 작업 처리하기
         if(isOnNavigating) {
@@ -120,14 +108,13 @@ public class GpsManager implements LocationListener {
                 @Override
                 public String onArrive(NavigateData navigationData) {
                     //callback
-                    return navigationData.getDescription();
+
+                    return null; //navigationData.getDescription();
                 }
             });
 
             try {
                 String desc = navigateData.checkLocation();
-                Log.d("MyTag", desc);
-                //TODO: 음성 출력
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -138,7 +125,7 @@ public class GpsManager implements LocationListener {
         }
 
         try{
-            Log.d("MyTag", CurrentLocationData.getInstance().getRoadAddress().toString());
+            //Log.d("MyTag", CurrentLocationData.getInstance().getRoadAddress().toString());
         } catch (Exception e) {
             //e.printStackTrace();
             Log.d("MyTag", "CurLocationData is empty");

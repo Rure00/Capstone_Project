@@ -23,11 +23,12 @@ public class WalkMode implements basicMode {
     private String endName;
 
     private ArrayList<Step> stepList;
+    private ArrayList<String> describes;
 
     public WalkMode(JSONObject json) {
-        try{
-            Log.d("WalkMode", "walkMode is created");
+        describes = new ArrayList<>();
 
+        try{
             sectionTime = json.get("sectionTime").toString();
             distance = json.get("distance").toString();
 
@@ -55,7 +56,7 @@ public class WalkMode implements basicMode {
 
                 Step newStep = new Step(streetName, distance, description, lineString);
 
-                Log.d("WalkMode", "StreetName: " + streetName);
+                describes.add(description);
 
                 stepList.add(newStep);
             }
@@ -64,18 +65,6 @@ public class WalkMode implements basicMode {
             e.printStackTrace();
         }
     }
-    public WalkMode() {
-        sectionTime = null;
-        distance = null;
-        startCoordinate = null;
-        endCoordinate = null;
-        startName = null;
-        endName = null;
-        stepList = null;
-    }
-
-    @Override
-    public String getDescription(int index) { return stepList.get(index).description; }
 
     @Override   //step 의 종점 좌표 반환
     public Coordinate getPoint(int index) {
@@ -84,6 +73,7 @@ public class WalkMode implements basicMode {
 
         return curStep.lineString.get(lineLen-1);
     }
+    public ArrayList<String> getDescribes() { return describes; }
 
     //------------------------------------------------------------------------------------------------------------------------//
 

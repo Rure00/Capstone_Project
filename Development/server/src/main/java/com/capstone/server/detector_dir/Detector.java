@@ -20,22 +20,12 @@ public class Detector {
     public String Run() throws IOException, InterruptedException {
 
         String commands = "cmd /c " +
-                "\"cd src/main/java/com/capstone/server/detector_dir/yolov5" +
-                "&&python detect.py --weights best.pt --img 320 --conf 0.40 --source images/image.jpg\"";
+                "\"cd C:\\Users\\USER\\Desktop\\SungSengmo\\Capstone_Project\\Development\\server\\src\\main\\java\\com\\capstone\\server\\detector_dir\\yolov5" +
+                "&&python detect.py --weights best.pt --img 320 --conf 0.25 --source images/image.jpg\"";
 
-        //Process process1 = new ProcessBuilder(commands).start();
-        Process process1 = Runtime.getRuntime().exec(commands);
+        Process process = Runtime.getRuntime().exec(commands);
 
-        //BufferedReader stdOut = new BufferedReader(new InputStreamReader(process1.getInputStream()));
-
-        //String str1 = null;
-        //while((str1 = stdOut.readLine()) != null) {
-        //    System.out.println(str1);
-        //}
-
-        //Process process2 = new ProcessBuilder("/c", "dir").start();
-
-        BufferedReader bReader = new BufferedReader(new InputStreamReader(process1.getInputStream(), StandardCharsets.UTF_8));
+        BufferedReader bReader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
 
         String result = "";
         StringBuilder sb = new StringBuilder();
@@ -45,11 +35,13 @@ public class Detector {
 
             String line = "";
             while((line = bReader.readLine()) != null) {
-                result = sb.append(result).append(line).toString();
-                System.out.println("detect: " + line);
+                if(!line.contains("requirements"))
+                    result = sb.append(result).append(line).toString();
             }
 
             System.out.println("End");
+
+            System.out.println("Result: " + result);
 
             return result;
         } catch (Exception e) {
@@ -57,9 +49,6 @@ public class Detector {
 
         }
 
-
-
         return null;
-
     }
 }

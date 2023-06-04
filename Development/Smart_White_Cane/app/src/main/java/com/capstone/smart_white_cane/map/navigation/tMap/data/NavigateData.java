@@ -5,14 +5,18 @@ import com.capstone.smart_white_cane.map.data.CurrentLocationData;
 import com.capstone.smart_white_cane.map.data.GeoTrans;
 import com.capstone.smart_white_cane.map.data.GeoTransPoint;
 
+import java.util.ArrayList;
+
 public class NavigateData {
     private RouteData routeData;
     private int legsIndex = 0;
     private int stepIndex = 0;
     private CallBack callBack = null;
+    private ArrayList<String> describes;
 
     public NavigateData(RouteData routeData) {
         this.routeData = routeData;
+        describes = routeData.getDescribes();
     }
 
     @FunctionalInterface
@@ -52,7 +56,7 @@ public class NavigateData {
 
         if(distance < 3) {
             //CheckPoint 도착.
-            description = curMode.getDescription(stepIndex);
+            //description = curMode.getDescription(stepIndex);
             legsIndex++;
             stepIndex++;
 
@@ -68,7 +72,11 @@ public class NavigateData {
     }
 
     //MainActivity 에서 호출
+    /*
     public String getDescription() {
         return routeData.getLegs(legsIndex).getDescription(stepIndex);
     }
+
+     */
+    public ArrayList<String> getDescribes() { return describes; }
 }

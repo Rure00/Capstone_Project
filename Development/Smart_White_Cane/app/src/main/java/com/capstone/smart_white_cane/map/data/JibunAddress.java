@@ -1,6 +1,10 @@
 package com.capstone.smart_white_cane.map.data;
 
-public class JibunAddress {
+import android.util.Log;
+
+import java.io.Serializable;
+
+public class JibunAddress implements Serializable {
     public String si;
     public String gu;
     public String dong;

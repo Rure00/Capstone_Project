@@ -1,6 +1,10 @@
 package com.capstone.smart_white_cane.map.data;
 
-public class RoadAddress {
+import android.util.Log;
+
+import java.io.Serializable;
+
+public class RoadAddress implements Serializable {
     public String si;
     public String gu;
     public String ro;
@@ -22,8 +26,10 @@ public class RoadAddress {
 
         if(array.length == 4) {
             return new RoadAddress(array[0], array[1], array[2], array[3]);
-        } else {
+        } else if(array.length == 5) {
             return new RoadAddress(array[0], array[1]+" "+array[2], array[3], array[4]);
+        } else {
+            return null;
         }
     }
 }

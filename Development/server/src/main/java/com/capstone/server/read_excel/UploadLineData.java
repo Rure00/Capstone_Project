@@ -16,7 +16,7 @@ public class UploadLineData {
     public UploadLineData() {
         ro = new ExcelReadOption();
         try {
-            ro.setFilePath("C:/Users/USER/Desktop/SungSengmo/Capstone_Project/Plan/Software/Seoul_Line.xlsx");
+            ro.setFilePath("C:\\Users\\sa\\Desktop\\server\\server\\src\\main\\java\\source\\Seoul_Line.xlsx");
             //ro.setFilePath("C:/Users/USER/Desktop/SungSengmo/Capstone_Project/Plan/Software/k.xlsx");
             ro.setOutputColumns("A", "B", "C");
             ro.setStartRow(2);

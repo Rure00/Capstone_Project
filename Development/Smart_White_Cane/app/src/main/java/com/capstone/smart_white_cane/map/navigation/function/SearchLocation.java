@@ -25,9 +25,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+
+
 public class SearchLocation {
-    private String clientId = "NJ0Rv7lDOHM4YUIMIDAM"; //애플리케이션 클라이언트 아이디
-    private String clientSecret = "JrQTF788pj"; //애플리케이션 클라이언트 시크릿
+    private String clientId = "JrQTF788pj"; //애플리케이션 클라이언트 아이디
+    private String clientSecret = "NJ0Rv7lDOHM4YUIMIDAM"; //애플리케이션 클라이언트 시크릿
 
     private String searchWord;
     private ExecutorService pool = null;
