@@ -1,0 +1,104 @@
+#include <SoftwareSerial.h>
+
+
+#define TrigPin 10
+#define IUM_MODE_TRIG 0x30
+#define IUM_MODE_COM 0x31
+#define IUM_MODE_AUTO 0x32
+#define IUM_MODE_OBJECT 0x33
+#define IUM_GET_RLRANGE_CM 0x22
+
+
+SoftwareSerial IUM_Serial(11, 12);
+
+int Vib_pin = 5;
+
+byte ID = 1;
+byte detect = 0;
+char Buff[8];
+float distance = 0;
+String DATA;
+
+uint8_t buffer_m[6];
+
+
+void SendCmd(unsigned char address, unsigned char cmd)
+{
+  IUM_Serial.write(address);
+  IUM_Serial.write(cmd);
+}
+
+char GetSevenByte(void)
+{
+  
+  if(IUM_Serial.available() >= 7)
+  {
+    for(byte n=0; n < 7; n++)
+    {
+      Buff[n] = IUM_Serial.read();
+    }
+    Buff[7] = 0;
+    return 1;
+  }
+  else return 0;
+}
+
+void setup()
+{
+  pinMode(Vib_pin, OUTPUT);
+  digitalWrite(Vib_pin, 5);
+
+  Serial.begin(9600);
+  IUM_Serial.begin(9600);
+  pinMode(TrigPin, INPUT);
+  digitalWrite(TrigPin, LOW);
+
+  SendCmd(0, IUM_MODE_COM);
+  Serial.println("Testing device connections");
+
+  delay(100);
+  
+}
+
+void loop() 
+{
+  float distance1;
+
+  SendCmd(ID, IUM_GET_RLRANGE_CM);
+  delay(100);
+
+  if(GetSevenByte() == 1)
+  {
+    detect = 1;
+
+    byte dist[5];
+    
+    for(byte n = 0; n < 5; n++)
+    {
+      dist[n] = Buff[n+1];
+    }
+    distance1 = atof(dist);
+    
+    Serial.println(distance1);
+    
+  }
+  else
+  {
+    detect = 0;
+  }
+
+  if(detect == 1 && distance1 < 180)
+  {
+    Serial.println("detected.");
+    digitalWrite(Vib_pin, HIGH);
+    delay(200);
+    digitalWrite(Vib_pin, LOW);
+  }
+  else
+  {
+    Serial.println("not detected");
+    digitalWrite(Vib_pin, LOW);
+    delay(100);
+  }
+  
+}
